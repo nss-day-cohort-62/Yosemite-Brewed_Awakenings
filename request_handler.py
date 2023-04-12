@@ -1,6 +1,7 @@
 import json
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from urllib.parse import urlparse, parse_qs
+from views import get_all_orders, get_all_employees
 
 
 
@@ -49,6 +50,14 @@ class HandleRequests(BaseHTTPRequestHandler):
 
     def do_GET(self):
         """Handle Get requests to the server"""
+        self._set_headers(200)
+        response = {}
+        (resource, id) = self.parse_url(self.path)
+        if resource == "orders":
+            response = get_all_orders()
+        elif resource == "employees":
+            response = get_all_employees()
+        self.wfile.write(json.dumps(response).encode())
 
     def do_POST(self):
         """Make a post request to the server"""
