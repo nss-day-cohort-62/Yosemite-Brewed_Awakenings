@@ -38,3 +38,38 @@ ORDERS = [{
 def get_all_orders():
     """returns all orders"""
     return ORDERS
+
+def get_single_order(id):
+    """returns a single order"""
+    requested_order = None
+
+    for order in ORDERS:
+        if order["id"] == id:
+            requested_order = order
+
+    return requested_order
+
+def create_order(order):
+    '''create new order'''
+    max_id = ORDERS[-1]['id']
+    new_order = max_id + 1 
+    order['id'] = new_order
+    ORDERS.append(order)
+    return order
+
+def update_order(id, new_order):
+    '''update order'''
+    for index, order in enumerate(ORDERS):
+        if order['id'] == id:
+            ORDERS[index] = new_order
+            break
+
+def delete_order(id):
+    '''delete an order'''
+    order_index = -1
+
+    for index, order in enumerate(ORDERS):
+        if order['id'] == id:
+            order_index = index
+        if order_index >= 0:
+            ORDERS.pop(order_index)
